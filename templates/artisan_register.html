@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artisan Register / Login - Desi Etsy</title>
+    <style>
+        body {
+            background: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 420px;
+            margin: 50px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            text-align: center;
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            border-color: #00bfff;
+            box-shadow: 0 0 8px rgba(0,191,255,0.3);
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(45deg, #00bfff, #1e90ff);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #1e90ff, #00bfff);
+        }
+
+        .btn-login {
+            background: linear-gradient(45deg, #ffa500, #ff7f50);
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(45deg, #ff7f50, #ffa500);
+        }
+
+        .separator {
+            text-align: center;
+            margin: 20px 0;
+            color: #888;
+            position: relative;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            display: inline-block;
+            width: 40%;
+            height: 1px;
+            background: #ccc;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>Artisan Register / Login</h2>
+
+    <h3>Register</h3>
+    <form method="post">
+        <input type="text" name="name" placeholder="Name" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit" class="btn">Register</button>
+    </form>
+
+    <div class="separator">or</div>
+
+    <h3>Login</h3>
+    <form method="post" action="{{ url_for('artisan_login') }}">
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit" class="btn btn-login">Login</button>
+    </form>
+
+    <div class="footer-note">
+        By registering, you agree to our terms and conditions.
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

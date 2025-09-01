@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart - Desi Etsy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            background: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        th {
+            background-color: #00bfff;
+            color: white;
+            padding: 12px;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e6f7ff;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #ff6600;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 5px auto;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: #cc5200;
+        }
+        .btn-remove {
+            background: #ff3300;
+        }
+        .btn-remove:hover {
+            background: #cc2900;
+        }
+        .center {
+            text-align: center;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .total {
+            font-size: 1.5em;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .empty-msg {
+            color: #555;
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Your Cart</h2>
+
+{% if items %}
+<table>
+    <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>
+            <img src="{{ url_for('static', filename='uploads/' ~ item[5]) }}" alt="Product Image">
+        </td>
+        <td>{{ item[1] }}</td>
+        <td>₹{{ item[2] }}</td>
+        <td>{{ item[3] }}</td>
+        <td>₹{{ item[2] * item[3] }}</td>
+        <td>
+            <a class="btn btn-remove" href="{{ url_for('remove_from_cart', product_id=item[0]) }}">Remove</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="center total">
+    Total: ₹{{ total }}
+</div>
+
+<div class="center">
+    <a class="btn" href="{{ url_for('checkout') }}">Proceed to Checkout</a>
+</div>
+
+{% else %}
+<div class="center">
+    <p class="empty-msg">Your cart is empty. Start adding some beautiful Desi crafts!</p>
+</div>
+{% endif %}
+
+{% endblock %}
+</body>
+</html>

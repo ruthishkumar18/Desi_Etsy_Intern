@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Desi Etsy</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #f9f9f9; 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+        }
+        nav { 
+            background: linear-gradient(to right, #007acc, #00c2ff); 
+            padding: 1em; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav .nav-links a { 
+            color: #fff; 
+            margin-right: 1em; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: color 0.3s;
+        }
+        nav .nav-links a:hover { 
+            color: orange; 
+            text-decoration: underline; 
+        }
+        .search-bar input[type="text"] { 
+            padding: 7px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        .search-bar .btn { 
+            padding: 7px 12px; 
+            background: #ff6600; 
+            color: #fff; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .search-bar .btn:hover { 
+            background: #e65c00; 
+        }
+        .container { 
+            padding: 20px; 
+            max-width: 1200px; 
+            margin: auto; 
+        }
+        .product { 
+            background: #fff; 
+            padding: 15px; 
+            margin: 10px; 
+            display: inline-block; 
+            width: 220px; 
+            vertical-align: top; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+            transition: transform 0.2s;
+        }
+        .product:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .btn { 
+            padding: 6px 12px; 
+            background: #007acc; 
+            color: #fff; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            display: inline-block; 
+            transition: background 0.3s;
+        }
+        .btn:hover { 
+            background: #005c99; 
+        }
+        footer { 
+            background: #333; 
+            color: #fff; 
+            text-align: center; 
+            padding: 15px; 
+            margin-top: 30px; 
+        }
+        .flash-success { 
+            color: green; 
+            font-weight: bold; 
+        }
+        .flash-error, .flash-danger { 
+            color: red; 
+            font-weight: bold; 
+        }
+        .flash-warning { 
+            color: orange; 
+            font-weight: bold; 
+        }
+        .flash-info { 
+            color: #007acc; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+        <a href="{{ url_for('artisan_register') }}">Artisan</a>
+        <a href="{{ url_for('admin_login') }}">Admin</a>
+    </div>
+    <div class="search-bar">
+        <form method="get" action="{{ url_for('index') }}">
+            <input type="text" name="q" placeholder="Search products...">
+            <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    &copy; 2025 Desi Etsy — Empowering Local Artisans
+</footer>
+
+</body>
+</html>

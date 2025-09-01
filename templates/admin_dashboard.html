@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Desi Etsy</title>
+    <style>
+        body {
+            background-color: #f4f6f8;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h2, h3 {
+            text-align: center;
+            color: #0d6efd;
+        }
+        .summary {
+            background: #fff;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .summary p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #333;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .product {
+            background: #fefefe;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px;
+            width: 220px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .product:hover {
+            transform: scale(1.03);
+        }
+        .product p, .product h4 {
+            margin: 8px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-verify {
+            background: #28a745;
+            color: #fff;
+        }
+        .btn-verify:hover {
+            background: #218838;
+        }
+        .btn-approve {
+            background: #fd7e14;
+            color: #fff;
+        }
+        .btn-approve:hover {
+            background: #e8590c;
+        }
+        .no-data {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<div class="summary">
+    <p><strong>Total Pending Artisans:</strong> {{ artisans|length }}</p>
+    <p><strong>Total Pending Products:</strong> {{ products|length }}</p>
+</div>
+
+<div class="section">
+    <h3>Pending Artisans</h3>
+    <div class="product-grid">
+        {% for a in artisans %}
+            <div class="product">
+                <p><strong>{{ a[1] }}</strong></p>
+                <p>{{ a[2] }}</p>
+                <a class="btn btn-verify" href="{{ url_for('verify_artisan', artisan_id=a[0]) }}">Verify</a>
+            </div>
+        {% endfor %}
+        {% if artisans|length == 0 %}
+            <p class="no-data">No pending artisans.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="section">
+    <h3>Pending Products</h3>
+    <div class="product-grid">
+        {% for p in products %}
+            <div class="product">
+                <h4>{{ p[2] }}</h4>
+                <p>{{ p[3] }}</p>
+                <p><strong>₹{{ p[4] }}</strong></p>
+                <a class="btn btn-approve" href="{{ url_for('approve_product', product_id=p[0]) }}">Approve</a>
+            </div>
+        {% endfor %}
+        {% if products|length == 0 %}
+            <p class="no-data">No pending products.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

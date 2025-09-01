@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Desi Etsy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            padding: 20px 0;
+        }
+        .summary {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        th {
+            background: #00bfff; /* skyblue */
+            color: #fff;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .qr-section img {
+            border: 4px solid #00bfff; /* skyblue border */
+            border-radius: 8px;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="email"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background: #ff6600; /* orange */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #e65c00;
+        }
+        .note {
+            font-size: 14px;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Checkout</h2>
+
+<div class="summary">
+    <table>
+        <tr><th>ID</th><th>Product</th><th>Qty</th><th>Subtotal</th></tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>₹{{ item[2] * item[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p class="total">Total Amount: ₹{{ total }}</p>
+
+    <div class="qr-section">
+        <p><strong>Scan the QR code below to complete payment</strong></p>
+        <img src="{{ url_for('static', filename='qr.png') }}" width="220" alt="QR Code">
+        <p class="note">Ensure you complete the payment before confirming.</p>
+    </div>
+
+    <form method="post" action="{{ url_for('confirm_payment') }}">
+        <input type="email" name="email" placeholder="Enter your email for confirmation" required>
+        <br>
+        <button class="btn" type="submit">I Have Paid</button>
+    </form>
+</div>
+
+{% endblock %}
+</body>
+</html>
